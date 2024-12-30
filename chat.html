@@ -39,19 +39,22 @@
             padding: 10px;
             overflow-y: auto;
             margin-bottom: 20px;
+            background-color: #f9f9f9;
         }
 
         .input-box {
             width: 100%;
             display: flex;
+            position: relative;
         }
 
         .input-box input {
             flex: 1;
             padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 10px 0 0 10px;
+            border-radius: 10px;
             outline: none;
+            font-size: 16px;
         }
 
         .input-box button {
@@ -59,18 +62,41 @@
             border: none;
             background-color: #333;
             color: white;
-            border-radius: 0 10px 10px 0;
-            cursor: pointer;
-        }
-
-        .image-container {
-            margin-top: 20px;
-        }
-
-        .image-container img {
-            max-width: 100%;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            max-width: 70%;
+        }
+
+        .user-message {
+            background-color: #d1e7dd;
+            align-self: flex-end;
+        }
+
+        .ai-message {
+            background-color: #f8d7da;
+            align-self: flex-start;
+        }
+
+        .loading {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 20px;
+            height: 20px;
+            animation: spin 2s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -80,51 +106,58 @@
             <!-- Chat messages will appear here -->
         </div>
         <div class="input-box">
-            <input type="text" id="user-input" placeholder="Type your message here...">
-            <button onclick="generateImage()">Generate</button>
+            <input type="text" id="user-input" placeholder="Type your message here..." onkeydown="if(event.key === 'Enter') generateImage()">
+            <button onclick="generateImage()">Send</button>
         </div>
-        <div class="image-container" id="image-container">
-            <!-- Generated images will appear here -->
-        </div>
+        <div class="loading" id="loading" style="display: none;"></div>
     </div>
     <script>
         async function generateImage() {
             const userInput = document.getElementById('user-input');
             const chatBox = document.getElementById('chat-box');
             const imageContainer = document.getElementById('image-container');
+            const loading = document.getElementById('loading');
             const prompt = userInput.value;
 
             if (prompt.trim() !== '') {
                 const userMessage = document.createElement('div');
                 userMessage.textContent = prompt;
-                userMessage.style.textAlign = 'right';
+                userMessage.className = 'message user-message';
                 chatBox.appendChild(userMessage);
 
-                // Call Backend Server
-                const response = await fetch('http://localhost:3000/generate-image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        prompt: prompt
-                    })
-                });
-
-                const data = await response.json();
-                const imageUrl = data.output[0]; // Adjust based on API response structure
-
-                const aiMessage = document.createElement('div');
-                aiMessage.textContent = 'AI: ' + prompt;
-                aiMessage.style.textAlign = 'left';
-                chatBox.appendChild(aiMessage);
-
-                const img = document.createElement('img');
-                img.src = imageUrl;
-                imageContainer.appendChild(img);
-
                 userInput.value = '';
-                chatBox.scrollTop = chatBox.scrollHeight;
+                loading.style.display = 'block';
+
+                try {
+                    // Call Backend Server
+                    const response = await fetch('http://localhost:3000/generate-image', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            prompt: prompt
+                        })
+                    });
+
+                    const data = await response.json();
+                    console.log('API Response:', data); // Debugging: Log the API response
+                    const imageUrl = data.output[0]; // Adjust based on API response structure
+
+                    const aiMessage = document.createElement('div');
+                    aiMessage.textContent = 'AI: ' + prompt;
+                    aiMessage.className = 'message ai-message';
+                    chatBox.appendChild(aiMessage);
+
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    imageContainer.appendChild(img);
+                } catch (error) {
+                    console.error('Error:', error);
+                } finally {
+                    loading.style.display = 'none';
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
             }
         }
     </script>
