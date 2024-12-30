@@ -62,6 +62,16 @@
             border-radius: 0 10px 10px 0;
             cursor: pointer;
         }
+
+        .image-container {
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -71,29 +81,47 @@
         </div>
         <div class="input-box">
             <input type="text" id="user-input" placeholder="Type your message here...">
-            <button onclick="sendMessage()">Send</button>
+            <button onclick="generateImage()">Generate</button>
+        </div>
+        <div class="image-container" id="image-container">
+            <!-- Generated images will appear here -->
         </div>
     </div>
     <script>
-        function sendMessage() {
+        async function generateImage() {
             const userInput = document.getElementById('user-input');
             const chatBox = document.getElementById('chat-box');
-            const message = userInput.value;
+            const imageContainer = document.getElementById('image-container');
+            const prompt = userInput.value;
 
-            if (message.trim() !== '') {
+            if (prompt.trim() !== '') {
                 const userMessage = document.createElement('div');
-                userMessage.textContent = message;
+                userMessage.textContent = prompt;
                 userMessage.style.textAlign = 'right';
                 chatBox.appendChild(userMessage);
 
-                // Simulate AI response
-                setTimeout(() => {
-                    const aiMessage = document.createElement('div');
-                    aiMessage.textContent = 'AI: ' + message;
-                    aiMessage.style.textAlign = 'left';
-                    chatBox.appendChild(aiMessage);
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                }, 1000);
+                // Call Backend Server
+                const response = await fetch('http://localhost:3000/generate-image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        prompt: prompt
+                    })
+                });
+
+                const data = await response.json();
+                const imageUrl = data.output[0]; // Adjust based on API response structure
+
+                const aiMessage = document.createElement('div');
+                aiMessage.textContent = 'AI: ' + prompt;
+                aiMessage.style.textAlign = 'left';
+                chatBox.appendChild(aiMessage);
+
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                imageContainer.appendChild(img);
 
                 userInput.value = '';
                 chatBox.scrollTop = chatBox.scrollHeight;
