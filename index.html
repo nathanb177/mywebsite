@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mainpage Design</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -20,7 +21,9 @@
 
         .categories {
             display: flex;
+            flex-wrap: wrap;
             gap: 20px;
+            justify-content: center;
         }
 
         .category {
@@ -40,6 +43,7 @@
 
         .category:hover {
             background-color: #a9a9a9;
+            transform: scale(1.05);
         }
 
         .category h2 {
@@ -66,6 +70,17 @@
         h1 {
             font-size: 36px;
             margin-bottom: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .category {
+                width: 150px;
+                height: 250px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
