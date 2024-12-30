@@ -19,54 +19,17 @@
             justify-content: center;
         }
 
-        .navbar {
-            width: 100%;
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .navbar .profile {
-            cursor: pointer;
-            position: relative;
-        }
-
-        .navbar .profile .dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background-color: white;
-            color: black;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            border-radius: 4px;
-            z-index: 1001;
-        }
-
-        .navbar .profile:hover .dropdown {
-            display: block;
-        }
-
         .categories {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
-            margin-top: 60px; /* Adjust for the navbar */
         }
 
         .category {
             background-color: #d3d3d3;
-            width: 250px; /* Increased size */
-            height: 350px; /* Increased size */
+            width: 200px;
+            height: 300px;
             border-radius: 15px;
             display: flex;
             flex-direction: column;
@@ -76,7 +39,6 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.3s ease-in-out;
-            position: relative;
         }
 
         .category:hover {
@@ -105,72 +67,38 @@
             color: #d3d3d3;
         }
 
-        .heart {
-            position: absolute;
-            font-size: 24px;
-            animation: pop 2s ease-in-out forwards;
-        }
-
-        @keyframes pop {
-            0% {
-                opacity: 0;
-                transform: scale(0) translateY(0);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.5) translateY(-50px);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0) translateY(-100px);
-            }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 600px) {
             .category {
-                width: 200px; /* Adjusted size for smaller screens */
-                height: 300px; /* Adjusted size for smaller screens */
+                width: 150px;
+                height: 250px;
+            }
+
+            h1 {
+                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="profile">
-            <span>👤</span>
-            <div class="dropdown">
-                <p>Anmelden</p>
-            </div>
-        </div>
-    </div>
+    <h1>Willkommen auf meiner Website</h1>
     <div class="categories">
-        <div class="category" onclick="showHearts(this)">
+        <div class="category">
             <h2>Chatting</h2>
             <p>Chatte und erhalte Fotos von anderen Personen.</p>
         </div>
-        <div class="category" onclick="showHearts(this)">
+        <div class="category">
             <h2>Bilder & Videos</h2>
             <p>Teile und entdecke spannende Medieninhalte.</p>
         </div>
-        <div class="category" onclick="showHearts(this)">
+        <div class="category">
             <h2>Editing</h2>
             <p>Bearbeite und optimiere deine Inhalte kreativ.</p>
         </div>
     </div>
-    <script>
-        function showHearts(element) {
-            for (let i = 0; i < 5; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = '❤️';
-                heart.style.left = `${Math.random() * 100}%`;
-                heart.style.top = `${Math.random() * 100}%`;
-                element.appendChild(heart);
-                setTimeout(() => {
-                    heart.remove();
-                }, 2000);
-            }
-        }
-    </script>
 </body>
 </html>
