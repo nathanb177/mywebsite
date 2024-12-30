@@ -39,6 +39,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.3s ease-in-out;
+            position: relative;
         }
 
         .category:hover {
@@ -67,6 +68,27 @@
             color: #d3d3d3;
         }
 
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: pop 2s ease-in-out forwards;
+        }
+
+        @keyframes pop {
+            0% {
+                opacity: 0;
+                transform: scale(0) translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5) translateY(-50px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) translateY(-100px);
+            }
+        }
+
         h1 {
             font-size: 36px;
             margin-bottom: 40px;
@@ -87,18 +109,33 @@
 <body>
     <h1>Willkommen auf meiner Website</h1>
     <div class="categories">
-        <div class="category">
+        <div class="category" onclick="showHearts(this)">
             <h2>Chatting</h2>
             <p>Chatte und erhalte Fotos von anderen Personen.</p>
         </div>
-        <div class="category">
+        <div class="category" onclick="showHearts(this)">
             <h2>Bilder & Videos</h2>
             <p>Teile und entdecke spannende Medieninhalte.</p>
         </div>
-        <div class="category">
+        <div class="category" onclick="showHearts(this)">
             <h2>Editing</h2>
             <p>Bearbeite und optimiere deine Inhalte kreativ.</p>
         </div>
     </div>
+    <script>
+        function showHearts(element) {
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.top = `${Math.random() * 100}%`;
+                element.appendChild(heart);
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+            }
+        }
+    </script>
 </body>
 </html>
