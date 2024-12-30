@@ -28,8 +28,8 @@
 
         .category {
             background-color: #d3d3d3;
-            width: 250px; /* Increased size */
-            height: 350px; /* Increased size */
+            width: 300px; /* Increased size */
+            height: 400px; /* Increased size */
             border-radius: 15px;
             display: flex;
             flex-direction: column;
@@ -70,15 +70,15 @@
 
         @media (max-width: 600px) {
             .category {
-                width: 200px; /* Adjusted size for smaller screens */
-                height: 300px; /* Adjusted size for smaller screens */
+                width: 250px; /* Adjusted size for smaller screens */
+                height: 350px; /* Adjusted size for smaller screens */
             }
         }
     </style>
 </head>
 <body>
     <div class="categories">
-        <div class="category">
+        <div class="category" onclick="redirectToChat()">
             <h2>Chatting</h2>
             <p>Chatte und erhalte Fotos von anderen Personen.</p>
         </div>
@@ -91,5 +91,10 @@
             <p>Bearbeite und optimiere deine Inhalte kreativ.</p>
         </div>
     </div>
+    <script>
+        function redirectToChat() {
+            window.location.href = 'chat.html';
+        }
+    </script>
 </body>
 </html>
