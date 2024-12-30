@@ -19,17 +19,54 @@
             justify-content: center;
         }
 
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar .profile {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .navbar .profile .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            color: black;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            z-index: 1001;
+        }
+
+        .navbar .profile:hover .dropdown {
+            display: block;
+        }
+
         .categories {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
+            margin-top: 60px; /* Adjust for the navbar */
         }
 
         .category {
             background-color: #d3d3d3;
-            width: 200px;
-            height: 300px;
+            width: 250px; /* Increased size */
+            height: 350px; /* Increased size */
             border-radius: 15px;
             display: flex;
             flex-direction: column;
@@ -89,25 +126,23 @@
             }
         }
 
-        h1 {
-            font-size: 36px;
-            margin-bottom: 40px;
-        }
-
         @media (max-width: 600px) {
             .category {
-                width: 150px;
-                height: 250px;
-            }
-
-            h1 {
-                font-size: 28px;
+                width: 200px; /* Adjusted size for smaller screens */
+                height: 300px; /* Adjusted size for smaller screens */
             }
         }
     </style>
 </head>
 <body>
-    <h1>Willkommen auf meiner Website</h1>
+    <div class="navbar">
+        <div class="profile">
+            <span>👤</span>
+            <div class="dropdown">
+                <p>Anmelden</p>
+            </div>
+        </div>
+    </div>
     <div class="categories">
         <div class="category" onclick="showHearts(this)">
             <h2>Chatting</h2>
