@@ -28,8 +28,8 @@
 
         .category {
             background-color: #d3d3d3;
-            width: 200px;
-            height: 300px;
+            width: 250px; /* Increased size */
+            height: 350px; /* Increased size */
             border-radius: 15px;
             display: flex;
             flex-direction: column;
@@ -39,6 +39,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.3s ease-in-out;
+            position: relative;
         }
 
         .category:hover {
@@ -67,25 +68,15 @@
             color: #d3d3d3;
         }
 
-        h1 {
-            font-size: 36px;
-            margin-bottom: 40px;
-        }
-
         @media (max-width: 600px) {
             .category {
-                width: 150px;
-                height: 250px;
-            }
-
-            h1 {
-                font-size: 28px;
+                width: 200px; /* Adjusted size for smaller screens */
+                height: 300px; /* Adjusted size for smaller screens */
             }
         }
     </style>
 </head>
 <body>
-    <h1>Willkommen auf meiner Website</h1>
     <div class="categories">
         <div class="category">
             <h2>Chatting</h2>
